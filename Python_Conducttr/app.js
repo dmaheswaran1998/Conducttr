@@ -625,19 +625,22 @@ function updateLine (people, filtered_dates) {
 
     //fill with zeros at the end: 
 
-    for (var i = 0; i < filtered_dates.length; i++) {
-        var n = filtered_dates.includes(`${time[i]}`)
-        if (time_new.length===0) {
-            time_new.push(iltered_dates[i])
+   
+    if (time_new.length===0) {
+        for (var i = 0; i < filtered_dates.length; i++) {
+            time_new.push(filtered_dates[i])
             frequency_filter.push(0)
-        
+            //Do something
         }
-        //Do something
+       
+    
     }
    
 
-    console.log(time_new.length);
+    console.log(time_new);
     console.log(frequency_filter);
+
+
 
 
     //slice all the arrays accordingly 
