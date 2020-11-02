@@ -75,12 +75,21 @@ input[type=submit] {
 
 
 <!--Make sure the form has the autocomplete function switched off:-->
-<form autocomplete="off" action="/action_page.php">
-  <div class="autocomplete" style="width:300px;">
-    <input id="myInput" type="text" name="myCountry" placeholder="Unique Player Name">
+<div class="row">
+  <div class="col-md-10">
+    <form autocomplete="off" action="/action_page.php">
+      <div class="autocomplete" style="width:100px;">
+        <input id="myInput" type="text" name="StartTime" placeholder="Start Time">
+      </div>
+    </form>
+    <form autocomplete="off" action="/action_page.php">
+      <div class="autocomplete" style="width:100px;">
+        <input id="myInput2" type="text" name="EndTime" placeholder="End Time">
+      </div>
+    </form>
+    <button id="submit" type="submit" class="btn btn-default">Filter Dates</button>
   </div>
-  <button id="submit" type="submit" class="btn btn-default">Find Person</button>
-</form>
+</div>    
 <script src="app3.js"></script>
 </body>
-</html>
+</html>    
