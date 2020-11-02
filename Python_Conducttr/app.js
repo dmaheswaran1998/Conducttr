@@ -514,29 +514,31 @@ function handleSubmit() {
             }
 
             if (time_list1[i]===end1){
-                var end_index=i;
+                var end_index=i+1;
                 console.log(end_index);
             }
                 
             //Do something
         }
 
-        
-
+        var filtered_dates= time_list1.slice(`${start_index}`, `${end_index}`);
+        //console.log(filtered_dates)
 
         for (const [key, value] of Object.entries(time_data)) {
             if (key==dropdown_value){
                 
-                var interaction=value;
-                console.log(interaction);
+                var people=value;
+                console.log(people);
+                updateLine(people, filtered_dates);
+                
 
             }  
            
             
         
+        
         }
 
-    
         
         
         
@@ -554,14 +556,10 @@ function handleSubmit() {
 
        
 
-    // }); 
   
-    //console.log(end_date);
-  
-    // clear the input value
 
 
-    console.log();
+ 
   
     // Build the plot with the new stock
     // buildPlot(stock);
@@ -576,42 +574,92 @@ function handleSubmit() {
  
 // Add event listener for submit button
 d3.select("#submit_dates").on("click", handleSubmit);
-  
 
 
-// function updateGauge(newdata){
-  
-      
-      
-//     var data = [
-//         {
-//           type: "indicator",
-//           mode: "gauge+number",
-//           value: newdata,
-//           title: { text: "Total Player Interaction" },
-//           gauge: {
-//             axis: { range: [null, 2600], tickwidth: 1, tickcolor: "darkblue" },
-//             bar: { color: "darkblue" },
-//             borderwidth: 2,
-//             bordercolor: "gray",
-//             steps: [
-//               { range: [0, 1300], color: "cyan" },
-//               { range: [1300, 2600], color: "royalblue" }
-//             ],
-//           }
-//         }
-//     ];
-      
-//     var layout = {
-//         width: 400,
-//         height: 400,
-//         margin: { t: 25, r: 35, l: 25, b: 25 },
-//         font: { color: "darkblue", family: "Arial" }
-//     };
-      
-//     Plotly.newPlot('gauge', data, layout);
+function updateLine (people, filtered_dates) {
+
+    console.log(filtered_dates);
     
-// }
+    
+    time=[]
+    frequency_all=[]
+    for (const [key, value] of Object.entries(people.All)) {
+        time.push(key);
+        frequency_all.push(value);
+    
+    }
+
+    console.log(time);
+
+    frequency_mail=[]
+    try { 
+        for (const [key, value] of Object.entries(people.mail)) {
+            frequency_mail.push(value);
+        
+        }
+
+    }
+
+    catch(err) {
+        for (var i = 0; i < time.length; i++) {
+            frequency_mail.push(0);
+            
+            //Do something
+        }
+    }
+
+    time_new=[]
+    frequency_filter=[]
+    for (var i = 0; i < time.length; i++) {
+        var n = filtered_dates.includes(`${time[i]}`)
+        if ( n===true){
+            time_new.push(time[i]);
+            frequency_filter.push(frequency_all[i])
+        }
+        else {
+            console.log("no date");
+        }
+        
+        //Do something
+    }
+
+    //fill with zeros at the end: 
+
+    for (var i = 0; i < filtered_dates.length; i++) {
+        var n = filtered_dates.includes(`${time[i]}`)
+        if (time_new.length===0) {
+            time_new.push(iltered_dates[i])
+            frequency_filter.push(0)
+        
+        }
+        //Do something
+    }
+   
+
+    console.log(time_new.length);
+    console.log(frequency_filter);
+
+
+    //slice all the arrays accordingly 
+
+
+
+
+
+   
+   
+
+    // try pushing into the social media for each channel 
+    
+
+
+
+
+}
+  
+
+
+
 
 // function updateLine(newdata){
 //     var time=[]
