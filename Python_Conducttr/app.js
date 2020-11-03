@@ -316,24 +316,6 @@ function updateBar2(newdata) {
 
 
  
-
-
-
-
-
-
-    //updateBar(interaction);
-    //updateBar(dictionary)
-    //updatePanel(people_imperson);  
-
-
-    // console.log(interaction);
-    // for (const [key, value] of Object.entries(frequency)) {
-    //     frequency3=frequency2.All
-    
-    // }
-    // console.log(frequency3);
-
     
     var trace1 ={
         x: frequency,
@@ -562,18 +544,10 @@ function handleSubmit() {
 
  
   
-    // Build the plot with the new stock
-    // buildPlot(stock);
+    
 }
   
-// function buildPlot(stock) {
 
-//     var stock = 3;
-//     console.log(stock);
-  
-// }
- 
-// Add event listener for submit button
 d3.select("#submit_dates").on("click", handleSubmit);
 
 
@@ -705,7 +679,7 @@ function updateLineData (people, filtered_dates) {
 
 
 
-   
+   updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq_filter_mail, freq_filter_websites, freq_filter_gosocial);
    
 
     // try pushing into the social media for each channel 
@@ -716,7 +690,80 @@ function updateLineData (people, filtered_dates) {
 
 }
 
+function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq_filter_mail, freq_filter_websites, freq_filter_gosocial){
+  
+    var trace1 = {
+        x: filtered_dates,
+        y: freq_filter_all,
+        type: 'scatter',
+        name: 'All channels',
+        line: {
+            color: 'rgba(0, 230, 64, 1)',
+            width: 2
+        }
+    };
+      
+    var trace2 = {
+        x: filtered_dates,
+        y: freq_filter_microblog,
+        type: 'scatter',
+        name: 'Microblog',
+        line: {
+            color: 'rgba(30, 139, 195, 1)',
+            width: 2
+        }
+    };
 
+    var trace3 = {
+        x: filtered_dates,
+        y: freq_filter_mail,
+        type: 'scatter',
+        name: 'Mail',
+        line: {
+            color: 'rgba(102, 51, 153, 1)',
+            width: 2
+        }
+    };
+
+    var trace4 = {
+        x: filtered_dates,
+        y: freq_filter_websites,
+        type: 'scatter',
+        name: 'Websites',
+        line: {
+            color: 'rgba(249, 191, 59, 1)',
+            width: 2
+        }
+    };
+
+    var trace5 = {
+        x: filtered_dates,
+        y: freq_filter_gosocial,
+        type: 'scatter',
+        name: 'goSocial',
+        line: {
+            color: 'rgba(222,45,38,0.8)',
+            width: 2
+        }
+    };
+
+    var layout = {
+        title: 'Time Series Graph',
+        xaxis: {
+          title: 'Time',
+          showgrid: false,
+          zeroline: false
+        },
+        yaxis: {
+          title: 'Frequency',
+          showline: false
+        }
+    };
+
+    var data = [trace1, trace2, trace3, trace4, trace5];
+
+    Plotly.newPlot('line', data, layout);
+}
 
 
   
