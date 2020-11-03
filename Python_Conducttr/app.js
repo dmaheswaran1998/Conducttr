@@ -137,11 +137,16 @@ function optionChanged() {
 
 }
 
-d3.select("#clear_player_data").on("click", clearPlayer);
+d3.select("#myInput3").on("click", clearPlayer);
 
 function clearPlayer () {
     d3.select("#myInput3").node().value = "";
+    // d3.select("#sample-metadata").html("");
+    // d3.select("#line").html("");
+    // d3.select("#bar1").html("");
+    // d3.select("#bar").html("");
 }
+
 
 
 
@@ -915,7 +920,7 @@ function EditAutocomplete (){
             console.log(start_index);
         }
 
-        var length_list=time_list1.length-1
+        var length_list=time_list1.length
         
         var new_time= time_list1.slice(`${start_index}`, `${length_list}`);
 
