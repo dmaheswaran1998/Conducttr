@@ -37,14 +37,6 @@ function initial() {
 
        
 
-        // var inital_gauge_data=data[0].All;
-        // var initial_reply_data=data[1].All;        
-        // var initial_time_data=data[3].All;
-        
-        // updateBar(initial_reply_data);
-        // updateGauge(inital_gauge_data);
-        // updateLine(initial_time_data)
-        // updatePanel(initial_top_cont)
     }); 
 
 
@@ -67,6 +59,7 @@ function optionChanged() {
         from_data=data[1].from;
         to_data=data[2].to;
         time_data=data[4];
+        time_list=data[3].time_list;
         // reply_frequency=data[2]
         // reply_total=data[0]
         // reply_time=data[3]
@@ -101,6 +94,19 @@ function optionChanged() {
                 var interaction=value;
 
                 updateBar2(interaction); 
+            }  
+           
+            
+        
+        }
+
+        for (const [key, value] of Object.entries(time_data)) {
+
+            if (key==dropdown_value){
+                
+                var people1=value;
+
+                updateLineData(people1, time_list);
             }  
            
             
@@ -455,6 +461,7 @@ function handleSubmit() {
     var dropdown_value = d3.select("#myInput3").node().value;
 
     var start1= d3.select("#myInput").node().value;
+
     //console.log(start_date);
 
     var end1 = d3.select("#myInput2").node().value;
@@ -690,6 +697,7 @@ function updateLineData (people, filtered_dates) {
 
 }
 
+
 function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq_filter_mail, freq_filter_websites, freq_filter_gosocial){
   
     var trace1 = {
@@ -764,6 +772,55 @@ function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq
 
     Plotly.newPlot('line', data, layout);
 }
+
+
+d3.select("#myInput2").on("click", EditAutocomplete);
+
+function EditAutocomplete (){
+
+    d3.json("player_data.json").then(function(data) {
+
+        var start1= d3.select("#myInput").node().value;
+
+        var time_list1=data[3].time_list;
+
+        if (start1!=="") {
+            for (var i = 0; i < time_list1.length; i++) {
+                if (time_list1[i]===start1){
+                    var start_index=i+1;
+                    console.log(start_index);
+                }
+                    
+                //Do something
+            }
+            
+                
+            //Do something
+        }
+        else {
+            start_index=0
+            console.log(start_index);
+        }
+
+        var length_list=time_list1.length-1
+        
+        var new_time= time_list1.slice(`${start_index}`, `${length_list}`);
+
+        autocomplete(document.getElementById("myInput2"), new_time);
+
+
+        
+        
+        //console.log(time_data);
+
+
+
+
+    });
+   
+}
+
+
 
 
   
