@@ -1,7 +1,4 @@
 function initial() {
-  
-
-  //updating the dropdown menu
 
     d3.json("player_data.json").then(function(data) {
         interaction=data[0].impersonations;
@@ -18,8 +15,6 @@ function initial() {
         var2=[]
         for (const [key] of Object.entries(interaction)) {
             var2.push(key);
-            
-        
         }
 
         console.log(var2);
@@ -48,323 +43,12 @@ function initial() {
     }); 
 
 
+    //updating the dropdown menu
   
+      
   
-}
-
-d3.select("#submit_player").on("click", optionChanged);
-  
-function optionChanged() {
-  //Assign the value of the dropdown menu option to a variable
-
-
-    var dropdown_value = d3.select("#myInput3").node().value;
-
-
-
-    d3.json("player_data.json").then(function(data) {
-        person_data=data[0].impersonations;
-        from_data=data[1].from;
-        to_data=data[2].to;
-        time_data=data[4];
-        // reply_frequency=data[2]
-        // reply_total=data[0]
-        // reply_time=data[3]
-        for (const [key, value] of Object.entries(person_data)) {
-            if (key==dropdown_value){
-                
-                var people=key;
-                var name=value;
-                //updateBar(dictionary);
-
-                updatePanel(people, name);
-                //updatePanel(people_imperson);
-            }    
-        
-        }
-
-        for (const [key, value] of Object.entries(from_data)) {
-            if (key==dropdown_value){
-                
-                var interaction=value;
-
-                updateBar1(interaction); 
-            }  
-           
-            
-        
-        }
-
-        for (const [key, value] of Object.entries(to_data)) {
-            if (key==dropdown_value){
-                
-                var interaction=value;
-
-                updateBar2(interaction); 
-            }  
-           
-            
-        
-        }
-
-
-
-    
-    });  
-    
-
-
-
-
-    // for (const [key, value] of Object.entries(reply_total)) {
-    //     if (key==dropdown_value){
-    //         var dictionary3=value;
-    //         updateGauge(dictionary3);
-    //     }  
-
-    
-    // }
-
-                  
-
-
-
-}
-
-d3.select("#clear_player_data").on("click", clearPlayer);
-
-function clearPlayer () {
-    d3.select("#myInput3").node().value = "";
-}
-
-
-
-//         
-
-//         for (const [key, value] of Object.entries(reply_time)) {
-//             if (key==dropdown_value){
-//                 var dictionary4=value;
-//                 updateLine(dictionary4);
-//             }    
-        
-//         }
-//     });   
-
-// } 
-
-function updateBar1(newdata) {
-
-    //come back tomorrow
-    var2=[]
-    txt=[]
-    for (const [key, value] of Object.entries(newdata)) {
-        var2.push(key);
-        txt.push(value);
-        
-    
-    }
-
     
     
-    frequency=[]
-    text_list=[]
-    for (var i = 0; i < var2.length; i++) {
-        var All_text=newdata[var2[i]].All;
-        frequency.push(All_text);
-        text_list.push(newdata[var2[i]]);
-        
-        //Do something
-    }
-
-    text_list_2=[]
-    for (var i = 0; i < text_list.length; i++) {
-        var myString = JSON.stringify(text_list[i]);
-        text_list_2.push(myString);
-       
-        
-        //Do something
-    }
-
-
- 
-
-
-
-
-
-
-    //updateBar(interaction);
-    //updateBar(dictionary)
-    //updatePanel(people_imperson);  
-
-
-    // console.log(interaction);
-    // for (const [key, value] of Object.entries(frequency)) {
-    //     frequency3=frequency2.All
-    
-    // }
-    // console.log(frequency3);
-
-    
-    var trace1 ={
-        x: frequency,
-        y: var2,
-        name: "Greek",
-        type: "bar",
-        text: text_list_2,
-        orientation: "h"
-    };
-
-
-    
-      var layout = {
-        title: 'Different Personas that can be personated',
-        showlegend: false,
-        hovermode: 'closest',
-        xaxis: {title:"Frequency" },
-        yaxis: {title:"Engagement Type" },
-        margin: {t:30}
-      };
-    
-    
-      var bar_chart = [trace1];
-    
-    
-    Plotly.newPlot("bar", bar_chart, layout);
-    
-
-
-
-
-}
-
-
-
-
-function updatePanel(people, name) {
-    var panel_select=d3.select("#sample-metadata");
-    d3.select("#sample-metadata").html("");
-    //frequency=[]
-    // for (const [key] of Object.entries(newdata)) {
-    //     name.push(key) 
-    //     //frequency.push(value)
-    // }
-    
-    //name=social.slice(0,10)
-    //ten_top=frequency.slice(0,10)
-
-    var i;
-
-    panel_select
-    .append("p")
-    .text(` ${"Name"}: ${people}`)
-    .append("p")
-    .text(`${"Impersonation Names"}`)
-
-    for (i = 0; i < name.length; i++) {
-        panel_select
-        .append("p")
-        .text(`${name[i]}`)
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-function updateBar2(newdata) {
-
-    //come back tomorrow
-    var2=[]
-    txt=[]
-    for (const [key, value] of Object.entries(newdata)) {
-        var2.push(key);
-        txt.push(value);
-        
-    
-    }
-
-    
-    
-    frequency=[]
-    text_list=[]
-    for (var i = 0; i < var2.length; i++) {
-        var All_text=newdata[var2[i]].All;
-        frequency.push(All_text);
-        text_list.push(newdata[var2[i]]);
-        
-        //Do something
-    }
-
-    text_list_2=[]
-    for (var i = 0; i < text_list.length; i++) {
-        var myString = JSON.stringify(text_list[i]);
-        text_list_2.push(myString);
-       
-        
-        //Do something
-    }
-
-
- 
-
-
-
-
-
-
-    //updateBar(interaction);
-    //updateBar(dictionary)
-    //updatePanel(people_imperson);  
-
-
-    // console.log(interaction);
-    // for (const [key, value] of Object.entries(frequency)) {
-    //     frequency3=frequency2.All
-    
-    // }
-    // console.log(frequency3);
-
-    
-    var trace1 ={
-        x: frequency,
-        y: var2,
-        name: "Greek",
-        type: "bar",
-        text: text_list_2,
-        orientation: "h"
-    };
-
-
-    
-      var layout = {
-        title: 'Different Personas that can be personated',
-        showlegend: false,
-        hovermode: 'closest',
-        xaxis: {title:"Frequency" },
-        yaxis: {title:"Engagement Type" },
-        margin: {t:30}
-      };
-    
-    
-      var bar_chart = [trace1];
-    
-    
-    Plotly.newPlot("bar1", bar_chart, layout);
-    
-
-
-
-
 }
 
 function autocomplete(inp, arr) {
@@ -464,7 +148,305 @@ function autocomplete(inp, arr) {
   });
 }
 
+d3.select("#clear_player_data").on("click", clearPlayer);
 
+function clearPlayer () {
+    d3.select("#myInput3").node().value = "";
+}
+
+d3.select("#submit_player").on("click", optionChanged);
+
+function optionChanged() {
+  //Assign the value of the dropdown menu option to a variable
+
+
+    var dropdown_value = d3.select("#myInput3").node().value;
+
+
+
+    d3.json("player_data.json").then(function(data) {
+        person_data=data[0].impersonations;
+        from_data=data[1].from;
+        to_data=data[2].to;
+        time_data=data[4];
+        // reply_frequency=data[2]
+        // reply_total=data[0]
+        // reply_time=data[3]
+        for (const [key, value] of Object.entries(person_data)) {
+            if (key==dropdown_value){
+                
+                var people=key;
+                var name=value;
+                //updateBar(dictionary);
+
+                updatePanel(people, name);
+                //updatePanel(people_imperson);
+            }    
+        
+        }
+
+        for (const [key, value] of Object.entries(from_data)) {
+            if (key==dropdown_value){
+                
+                var interaction=value;
+
+                updateBar1(interaction); 
+            }  
+           
+            
+        
+        }
+
+        for (const [key, value] of Object.entries(to_data)) {
+            if (key==dropdown_value){
+                
+                var interaction=value;
+
+                updateBar2(interaction); 
+            }  
+           
+            
+        
+        }
+
+
+
+    
+    });  
+    
+
+
+
+
+    // for (const [key, value] of Object.entries(reply_total)) {
+    //     if (key==dropdown_value){
+    //         var dictionary3=value;
+    //         updateGauge(dictionary3);
+    //     }  
+
+    
+    // }
+
+                  
+
+
+
+}
+
+
+function updatePanel(people, name) {
+    var panel_select=d3.select("#sample-metadata");
+    d3.select("#sample-metadata").html("");
+    //frequency=[]
+    // for (const [key] of Object.entries(newdata)) {
+    //     name.push(key) 
+    //     //frequency.push(value)
+    // }
+    
+    //name=social.slice(0,10)
+    //ten_top=frequency.slice(0,10)
+
+    var i;
+
+    panel_select
+    .append("p")
+    .text(` ${"Name"}: ${people}`)
+    .append("p")
+    .text(`${"Impersonation Names"}`)
+
+    for (i = 0; i < name.length; i++) {
+        panel_select
+        .append("p")
+        .text(`${name[i]}`)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+function updateBar1(newdata) {
+
+    //come back tomorrow
+    var2=[]
+    txt=[]
+    for (const [key, value] of Object.entries(newdata)) {
+        var2.push(key);
+        txt.push(value);
+        
+    
+    }
+
+    
+    
+    frequency=[]
+    text_list=[]
+    for (var i = 0; i < var2.length; i++) {
+        var All_text=newdata[var2[i]].All;
+        frequency.push(All_text);
+        text_list.push(newdata[var2[i]]);
+        
+        //Do something
+    }
+
+    text_list_2=[]
+    for (var i = 0; i < text_list.length; i++) {
+        var myString = JSON.stringify(text_list[i]);
+        text_list_2.push(myString);
+       
+        
+        //Do something
+    }
+
+
+ 
+
+
+
+
+
+
+    //updateBar(interaction);
+    //updateBar(dictionary)
+    //updatePanel(people_imperson);  
+
+
+    // console.log(interaction);
+    // for (const [key, value] of Object.entries(frequency)) {
+    //     frequency3=frequency2.All
+    
+    // }
+    // console.log(frequency3);
+
+    
+    var trace1 ={
+        x: frequency,
+        y: var2,
+        name: "Greek",
+        type: "bar",
+        text: text_list_2,
+        orientation: "h"
+    };
+
+
+    
+      var layout = {
+        title: 'Different Personas that can be personated',
+        showlegend: false,
+        hovermode: 'closest',
+        xaxis: {title:"Frequency" },
+        yaxis: {title:"Engagement Type" },
+        margin: {t:30}
+      };
+    
+    
+      var bar_chart = [trace1];
+    
+    
+    Plotly.newPlot("bar", bar_chart, layout);
+    
+
+
+
+
+}
+
+function updateBar2(newdata) {
+
+    //come back tomorrow
+    var2=[]
+    txt=[]
+    for (const [key, value] of Object.entries(newdata)) {
+        var2.push(key);
+        txt.push(value);
+        
+    
+    }
+
+    
+    
+    frequency=[]
+    text_list=[]
+    for (var i = 0; i < var2.length; i++) {
+        var All_text=newdata[var2[i]].All;
+        frequency.push(All_text);
+        text_list.push(newdata[var2[i]]);
+        
+        //Do something
+    }
+
+    text_list_2=[]
+    for (var i = 0; i < text_list.length; i++) {
+        var myString = JSON.stringify(text_list[i]);
+        text_list_2.push(myString);
+       
+        
+        //Do something
+    }
+
+
+ 
+
+
+
+
+
+
+    //updateBar(interaction);
+    //updateBar(dictionary)
+    //updatePanel(people_imperson);  
+
+
+    // console.log(interaction);
+    // for (const [key, value] of Object.entries(frequency)) {
+    //     frequency3=frequency2.All
+    
+    // }
+    // console.log(frequency3);
+
+    
+    var trace1 ={
+        x: frequency,
+        y: var2,
+        name: "Greek",
+        type: "bar",
+        text: text_list_2,
+        orientation: "h"
+    };
+
+
+    
+      var layout = {
+        title: 'Different Personas that can be personated',
+        showlegend: false,
+        hovermode: 'closest',
+        xaxis: {title:"Frequency" },
+        yaxis: {title:"Engagement Type" },
+        margin: {t:30}
+      };
+    
+    
+      var bar_chart = [trace1];
+    
+    
+    Plotly.newPlot("bar1", bar_chart, layout);
+    
+
+
+
+
+}
+
+
+d3.select("#submit_dates").on("click", handleSubmit);
 
 function handleSubmit() {
     // Prevent the page from refreshing
@@ -555,6 +537,8 @@ function handleSubmit() {
 
 
 
+
+
        
 
   
@@ -565,17 +549,6 @@ function handleSubmit() {
     // Build the plot with the new stock
     // buildPlot(stock);
 }
-  
-// function buildPlot(stock) {
-
-//     var stock = 3;
-//     console.log(stock);
-  
-// }
- 
-// Add event listener for submit button
-d3.select("#submit_dates").on("click", handleSubmit);
-
 
 function updateLineData (people, filtered_dates) {
 
@@ -590,7 +563,6 @@ function updateLineData (people, filtered_dates) {
     
     }
 
-    console.log(frequency_all);
     console.log(time);
 
     frequency_mail=[]
@@ -612,7 +584,7 @@ function updateLineData (people, filtered_dates) {
 
     frequency_microblog=[]
     try { 
-        for (const [key, value] of Object.entries(people.microblog)) {
+        for (const [key, value] of Object.entries(people.mail)) {
             frequency_microblog.push(value);
         
         }
@@ -667,18 +639,15 @@ function updateLineData (people, filtered_dates) {
     freq_filter_microblog=[]
     freq_filter_gosocial=[]
     freq_filter_websites=[]
-
-    p=0
+    
     for (var i = 0; i < filtered_dates.length; i++) {
         var n = time.includes(`${filtered_dates[i]}`)
         if ( n===true){
-            freq_filter_all.push(frequency_all[`${p}`]);
-            freq_filter_mail.push(frequency_mail[`${p}`]);
-            freq_filter_microblog.push(frequency_microblog[`${p}`]);
-            freq_filter_gosocial.push(frequency_gosocial[`${p}`]);
-            freq_filter_websites.push(frequency_websites[`${p}`]);
-            p=p+1
-          
+            freq_filter_all.push(frequency_all[i])
+            freq_filter_mail.push(frequency_mail[i])
+            freq_filter_microblog.push(frequency_microblog[i])
+            freq_filter_gosocial.push(frequency_gosocial[i])
+            freq_filter_websites.push(frequency_websites[i])
 
 
         }
@@ -700,6 +669,15 @@ function updateLineData (people, filtered_dates) {
     console.log(freq_filter_gosocial);
     console.log(freq_filter_websites);
 
+  
+   
+
+  
+
+
+
+
+    // slice all the arrays accordingly 
 
 
 
@@ -719,8 +697,4 @@ function updateLineData (people, filtered_dates) {
 
 
 
-  
-
 initial();
-
-
