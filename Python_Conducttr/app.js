@@ -575,15 +575,18 @@ function updateLineData (people, filtered_dates) {
     console.log(time);
 
     frequency_mail=[]
+    time_mail=[]
     try { 
         for (const [key, value] of Object.entries(people.mail)) {
             frequency_mail.push(value);
+            time_mail.push(key);
         
         }
 
     }
 
     catch(err) {
+        time_mail=time;
         for (var i = 0; i < time.length; i++) {
             frequency_mail.push(0);
             
@@ -591,16 +594,40 @@ function updateLineData (people, filtered_dates) {
         }
     }
 
+    freq_mail2=[]
+    a=0
+    for (var i = 0; i < time.length; i++) {
+        var n = time_mail.includes(`${time[i]}`)
+        if ( n===true){
+            freq_mail2.push(frequency_mail[`${a}`]);
+            a=a+1
+          
+
+
+        }
+        else {
+            freq_mail2.push(0);
+        }
+        
+        //Do something
+    }
+
+
+
+
     frequency_microblog=[]
+    time_microblog=[]
     try { 
         for (const [key, value] of Object.entries(people.microblog)) {
             frequency_microblog.push(value);
+            time_microblog.push(key);
         
         }
 
     }
 
     catch(err) {
+        time_microblog=time;
         for (var i = 0; i < time.length; i++) {
             frequency_microblog.push(0);
             
@@ -608,39 +635,104 @@ function updateLineData (people, filtered_dates) {
         }
     }
 
+    freq_microblog2=[]
+    s=0
+    for (var i = 0; i < time.length; i++) {
+        var n = time_microblog.includes(`${time[i]}`)
+        if ( n===true){
+            freq_microblog2.push(frequency_microblog[`${s}`]);
+            s=s+1
+          
+
+
+        }
+        else {
+            freq_microblog2.push(0);
+        }
+        
+        //Do something
+    }
+
+
     frequency_gosocial=[]
+    time_gosocial=[]
     try { 
         for (const [key, value] of Object.entries(people.gosocial)) {
             frequency_gosocial.push(value);
+            time_gosocial.push(key);
         
         }
 
     }
-
     catch(err) {
+        time_gosocial=time;
         for (var i = 0; i < time.length; i++) {
             frequency_gosocial.push(0);
             
             //Do something
         }
     }
+    
+    freq_gosocial2=[]
+    q=0
+    for (var i = 0; i < time.length; i++) {
+        var n = time_gosocial.includes(`${time[i]}`)
+        if ( n===true){
+            freq_gosocial2.push(frequency_gosocial[`${q}`]);
+            q=q+1
+          
 
+
+        }
+        else {
+            freq_gosocial2.push(0);
+        }
+        
+        //Do something
+    }
+
+    console.log(freq_gosocial2);
+    
+
+    
     frequency_websites=[]
+    time_websites=[]
     try { 
         for (const [key, value] of Object.entries(people.websites)) {
             frequency_websites.push(value);
+            time_websites.push(key);
         
         }
 
     }
 
     catch(err) {
+        time_websites=time;
         for (var i = 0; i < time.length; i++) {
             frequency_websites.push(0);
             
             //Do something
         }
     }
+
+    freq_websites2=[]
+    r=0
+    for (var i = 0; i < time.length; i++) {
+        var n = time_websites.includes(`${time[i]}`)
+        if ( n===true){
+            freq_websites2.push(frequency_websites[`${r}`]);
+            r=r+1
+          
+
+
+        }
+        else {
+            freq_websites2.push(0);
+        }
+        
+        //Do something
+    }
+
 
 
     freq_filter_all=[]
@@ -649,15 +741,16 @@ function updateLineData (people, filtered_dates) {
     freq_filter_gosocial=[]
     freq_filter_websites=[]
 
+
     p=0
     for (var i = 0; i < filtered_dates.length; i++) {
         var n = time.includes(`${filtered_dates[i]}`)
         if ( n===true){
             freq_filter_all.push(frequency_all[`${p}`]);
-            freq_filter_mail.push(frequency_mail[`${p}`]);
-            freq_filter_microblog.push(frequency_microblog[`${p}`]);
-            freq_filter_gosocial.push(frequency_gosocial[`${p}`]);
-            freq_filter_websites.push(frequency_websites[`${p}`]);
+            freq_filter_mail.push(freq_mail2[`${p}`]);
+            freq_filter_microblog.push(freq_microblog2[`${p}`]);
+            freq_filter_gosocial.push(freq_gosocial2[`${p}`]);
+            freq_filter_websites.push(freq_websites2[`${p}`]);
             p=p+1
           
 
@@ -673,7 +766,27 @@ function updateLineData (people, filtered_dates) {
         
         //Do something
     }
-    //fill with zeros at the end: 
+
+  //map undefined values to 0
+
+  freq_filter_gosocial = freq_filter_gosocial.map(v => v === undefined ? 0 : v);
+  freq_filter_websites= freq_filter_websites.map(v => v === undefined ? 0 : v);
+  freq_filter_mail= freq_filter_mail.map(v => v === undefined ? 0 : v);
+  freq_filter_microblog= freq_filter_microblog.map(v => v === undefined ? 0 : v);
+  freq_filter_all= freq_filter_all.map(v => v === undefined ? 0 : v);
+
+  
+
+
+
+
+
+
+
+
+   //cleaning any undefined values 
+
+
 
     console.log(freq_filter_all);
     console.log(freq_filter_mail);
