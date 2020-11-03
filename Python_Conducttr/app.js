@@ -787,7 +787,7 @@ function EditAutocomplete (){
         if (start1!=="") {
             for (var i = 0; i < time_list1.length; i++) {
                 if (time_list1[i]===start1){
-                    var start_index=i+1;
+                    var start_index=i;
                     console.log(start_index);
                 }
                     
