@@ -22,7 +22,6 @@ function initial() {
         
         }
 
-        console.log(var2);
 
 
 
@@ -42,7 +41,7 @@ function initial() {
 
   
   
-}
+} 
 
 d3.select("#submit_player").on("click", optionChanged);
   
@@ -81,7 +80,64 @@ function optionChanged() {
                 
                 var interaction=value;
 
-                updateBar1(interaction); 
+                var2=[]
+                txt=[]
+                for (const [key, value] of Object.entries(interaction)) {
+                    var2.push(key);
+                    txt.push(value);
+                    
+                
+                }
+            
+                microblog=[]
+                gosocial=[]
+                websites=[]
+                mail=[]
+                
+                frequency=[]
+                for (var i = 0; i < var2.length; i++) {
+                    microblog.push(interaction[var2[i]].microblog);
+                    gosocial.push(interaction[var2[i]].gosocial);
+                    websites.push(interaction[var2[i]].websites);
+                    mail.push(interaction[var2[i]].mail)
+
+                    
+
+
+
+
+
+                    //text_list.push(interaction[var2[i]]);
+                    
+                    //Do something
+                }
+
+                mail = mail.map(v => v === undefined ? 0 : v);
+                websites= websites.map(v => v === undefined ? 0 : v);
+                gosocial= gosocial.map(v => v === undefined ? 0 : v);
+                microblog= microblog.map(v => v === undefined ? 0 : v);
+
+
+                
+                total_list=[]
+                for (var i = 0; i < var2.length; i++) {
+                    total=0
+                    total=mail[i]+websites[i]+gosocial[i]+microblog[i]
+                    total_list.push(total);
+
+
+
+
+                    //text_list.push(interaction[var2[i]]);
+                    
+                    //Do something
+                }
+
+
+
+                updateBar1(total_list, var2); 
+
+                console.log(var2);
             }  
            
             
@@ -163,66 +219,15 @@ function clearPlayer () {
 
 // } 
 
-function updateBar1(newdata) {
+function updateBar1(frequency, name) {
 
-    //come back tomorrow
-    var2=[]
-    txt=[]
-    for (const [key, value] of Object.entries(newdata)) {
-        var2.push(key);
-        txt.push(value);
-        
-    
-    }
-
-    
-    
-    frequency=[]
-    text_list=[]
-    for (var i = 0; i < var2.length; i++) {
-        var All_text=newdata[var2[i]].All;
-        frequency.push(All_text);
-        text_list.push(newdata[var2[i]]);
-        
-        //Do something
-    }
-
-    text_list_2=[]
-    for (var i = 0; i < text_list.length; i++) {
-        var myString = JSON.stringify(text_list[i]);
-        text_list_2.push(myString);
-       
-        
-        //Do something
-    }
-
-
- 
-
-
-
-
-
-
-    //updateBar(interaction);
-    //updateBar(dictionary)
-    //updatePanel(people_imperson);  
-
-
-    // console.log(interaction);
-    // for (const [key, value] of Object.entries(frequency)) {
-    //     frequency3=frequency2.All
-    
-    // }
-    // console.log(frequency3);
 
     
     var trace1 ={
         x: frequency,
-        y: var2,
+        y: name,
         name: "Greek",
         type: "bar",
-        text: text_list_2,
         orientation: "h"
     };
 
@@ -292,48 +297,14 @@ function updatePanel(people, name) {
 }
 
 
-function updateBar2(newdata) {
+function updateBar2(frequency, name) {
 
     //come back tomorrow
-    var2=[]
-    txt=[]
-    for (const [key, value] of Object.entries(newdata)) {
-        var2.push(key);
-        txt.push(value);
-        
-    
-    }
-
-    
-    
-    frequency=[]
-    text_list=[]
-    for (var i = 0; i < var2.length; i++) {
-        var All_text=newdata[var2[i]].All;
-        frequency.push(All_text);
-        text_list.push(newdata[var2[i]]);
-        
-        //Do something
-    }
-
-    text_list_2=[]
-    for (var i = 0; i < text_list.length; i++) {
-        var myString = JSON.stringify(text_list[i]);
-        text_list_2.push(myString);
-       
-        
-        //Do something
-    }
-
-
- 
-    
     var trace1 ={
         x: frequency,
-        y: var2,
+        y: name,
         name: "Greek",
         type: "bar",
-        text: text_list_2,
         orientation: "h"
     };
 
@@ -477,6 +448,8 @@ function handleSubmit() {
 
         
         var time_data=data[3].time_list;
+        var people_list=data[5];
+        var to_list=data[6];
 
         //var final_date_length=time_data.length;
         var final_date_length=time_data.length-1;
@@ -486,13 +459,11 @@ function handleSubmit() {
             start1=time_data[0];
         }
 
-        console.log(start1);
 
         if (end1==="") {
             end1=time_data[`${final_date_length}`]
         }
 
-        console.log(end1);
 
 
 
@@ -505,12 +476,10 @@ function handleSubmit() {
         for (var i = 0; i < time_list1.length; i++) {
             if (time_list1[i]===start1){
                 var start_index=i;
-                console.log(start_index);
             }
 
             if (time_list1[i]===end1){
                 var end_index=i+1;
-                console.log(end_index);
             }
                 
             //Do something
@@ -523,7 +492,6 @@ function handleSubmit() {
             if (key==dropdown_value){
                 
                 var people=value;
-                console.log(people);
                 updateLineData(people, filtered_dates);
                 
 
@@ -533,6 +501,37 @@ function handleSubmit() {
         
         
         }
+
+        for (const [key, value] of Object.entries(people_list)) {
+            if (key==dropdown_value){
+                
+                var people=value;
+                editBar(people, filtered_dates);
+                
+
+            }  
+           
+            
+        
+        
+        }
+
+
+        for (const [key, value] of Object.entries(to_list)) {
+            if (key==dropdown_value){
+                
+                var people=value;
+                editBar2(people, filtered_dates);
+                
+
+            }  
+           
+            
+        
+        
+        }
+
+
 
         
         
@@ -576,8 +575,8 @@ function updateLineData (people, filtered_dates) {
     
     }
 
-    console.log(frequency_all);
     console.log(time);
+
 
     frequency_mail=[]
     time_mail=[]
@@ -616,6 +615,8 @@ function updateLineData (people, filtered_dates) {
         
         //Do something
     }
+
+    console.log(freq_mail2);
 
 
 
@@ -696,7 +697,6 @@ function updateLineData (people, filtered_dates) {
         //Do something
     }
 
-    console.log(freq_gosocial2);
     
 
     
@@ -737,6 +737,7 @@ function updateLineData (people, filtered_dates) {
         
         //Do something
     }
+    console.log(freq_websites2);
 
 
 
@@ -747,40 +748,83 @@ function updateLineData (people, filtered_dates) {
     freq_filter_websites=[]
 
 
-    p=0
-    for (var i = 0; i < filtered_dates.length; i++) {
-        var n = time.includes(`${filtered_dates[i]}`)
-        if ( n===true){
-            freq_filter_all.push(frequency_all[`${p}`]);
-            freq_filter_mail.push(freq_mail2[`${p}`]);
-            freq_filter_microblog.push(freq_microblog2[`${p}`]);
-            freq_filter_gosocial.push(freq_gosocial2[`${p}`]);
-            freq_filter_websites.push(freq_websites2[`${p}`]);
-            p=p+1
+    // p=0
+    // for (var i = 0; i < filtered_dates.length; i++) {
+    //     var n = time.includes(`${filtered_dates[i]}`)
+     
+    //     if ( n===true){
+    //         freq_filter_all.push(frequency_all5[`${p}`]);
+    //         freq_filter_mail.push(freq_mail2[`${p}`]);
+    //         freq_filter_microblog.push(freq_microblog2[`${p}`]);
+    //         freq_filter_gosocial.push(freq_gosocial2[`${p}`]);
+    //         freq_filter_websites.push(freq_websites2[`${p}`]);
+    //         p=p+1
           
 
 
-        }
-        else {
-            freq_filter_all.push(0);
-            freq_filter_mail.push(0);
-            freq_filter_microblog.push(0);
-            freq_filter_gosocial.push(0);
-            freq_filter_websites.push(0);
-        }
+    //     }
+    //     else {
+    //         freq_filter_all.push(0);
+    //         console.log(0);
+    //         freq_filter_mail.push(0);
+    //         freq_filter_microblog.push(0);
+    //         freq_filter_gosocial.push(0);
+    //         freq_filter_websites.push(0);
+    //     }
         
-        //Do something
+    //     //Do something
+    // }
+    
+    time_2=[]
+    for (var i = 0; i < filtered_dates.length; i++) {
+        filtered_date=filtered_dates[i]
+
+        for (var j=0; j<time.length; j++){
+            if (filtered_date===time[j]) {
+                freq_filter_all.push(frequency_all[j])
+                freq_filter_mail.push(freq_mail2[j])
+                freq_filter_microblog.push(freq_microblog2[j])
+                freq_filter_gosocial.push(freq_gosocial2[j])
+                freq_filter_websites.push(freq_websites2[j])
+                time_2.push(time[j])
+            }
+
+            
+                
+           
+        }
     }
 
-  //map undefined values to 0
-
-  freq_filter_gosocial = freq_filter_gosocial.map(v => v === undefined ? 0 : v);
-  freq_filter_websites= freq_filter_websites.map(v => v === undefined ? 0 : v);
-  freq_filter_mail= freq_filter_mail.map(v => v === undefined ? 0 : v);
-  freq_filter_microblog= freq_filter_microblog.map(v => v === undefined ? 0 : v);
-  freq_filter_all= freq_filter_all.map(v => v === undefined ? 0 : v);
-
   
+    if (freq_filter_all.length===0){
+        for (var i = 0; i < filtered_dates.length; i++) {
+           freq_filter_all.push(0)
+           freq_filter_mail.push(0)
+           freq_filter_microblog.push(0)
+           freq_filter_websites.push(0)
+           freq_filter_gosocial.push(0)
+           time_2.push(filtered_dates[i])
+        }
+    }
+
+
+    console.log(freq_filter_all);
+    console.log(time_2);
+
+    updateLine(time_2, freq_filter_all, freq_filter_microblog, freq_filter_mail,freq_filter_websites, freq_filter_gosocial);
+
+
+    //map undefined values to 0
+
+    //   console.log(freq_filter_all);
+
+    //   freq_filter_gosocial = freq_filter_gosocial.map(v => v === undefined ? 0 : v);
+    //   freq_filter_websites= freq_filter_websites.map(v => v === undefined ? 0 : v);
+    //   freq_filter_mail= freq_filter_mail.map(v => v === undefined ? 0 : v);
+    //   freq_filter_microblog= freq_filter_microblog.map(v => v === undefined ? 0 : v);
+    //   freq_filter_all= freq_filter_all.map(v => v === undefined ? 0 : v);
+
+    
 
 
 
@@ -793,18 +837,12 @@ function updateLineData (people, filtered_dates) {
 
 
 
-    console.log(freq_filter_all);
-    console.log(freq_filter_mail);
-    console.log(freq_filter_microblog);
-    console.log(freq_filter_gosocial);
-    console.log(freq_filter_websites);
 
 
 
 
 
-
-   updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq_filter_mail, freq_filter_websites, freq_filter_gosocial);
+    //    updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq_filter_mail, freq_filter_websites, freq_filter_gosocial);
    
 
     // try pushing into the social media for each channel 
@@ -816,10 +854,10 @@ function updateLineData (people, filtered_dates) {
 }
 
 
-function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq_filter_mail, freq_filter_websites, freq_filter_gosocial){
+function updateLine(time_2, freq_filter_all, freq_filter_microblog, freq_filter_mail,freq_filter_websites, freq_filter_gosocial) {
   
     var trace1 = {
-        x: filtered_dates,
+        x: time_2,
         y: freq_filter_all,
         type: 'scatter',
         name: 'All channels',
@@ -830,7 +868,7 @@ function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq
     };
       
     var trace2 = {
-        x: filtered_dates,
+        x: time_2,
         y: freq_filter_microblog,
         type: 'scatter',
         name: 'Microblog',
@@ -841,7 +879,7 @@ function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq
     };
 
     var trace3 = {
-        x: filtered_dates,
+        x: time_2,
         y: freq_filter_mail,
         type: 'scatter',
         name: 'Mail',
@@ -852,7 +890,7 @@ function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq
     };
 
     var trace4 = {
-        x: filtered_dates,
+        x: time_2,
         y: freq_filter_websites,
         type: 'scatter',
         name: 'Websites',
@@ -863,7 +901,7 @@ function updateLine(filtered_dates, freq_filter_all, freq_filter_microblog, freq
     };
 
     var trace5 = {
-        x: filtered_dates,
+        x: time_2,
         y: freq_filter_gosocial,
         type: 'scatter',
         name: 'goSocial',
@@ -906,7 +944,6 @@ function EditAutocomplete (){
             for (var i = 0; i < time_list1.length; i++) {
                 if (time_list1[i]===start1){
                     var start_index=i;
-                    console.log(start_index);
                 }
                     
                 //Do something
@@ -917,7 +954,6 @@ function EditAutocomplete (){
         }
         else {
             start_index=0
-            console.log(start_index);
         }
 
         var length_list=time_list1.length
@@ -936,6 +972,220 @@ function EditAutocomplete (){
 
     });
    
+}
+
+function editBar (people, filtered_dates) {
+
+    names=[]
+    frequency=[]
+
+    for (const [key, value] of Object.entries(people)) {
+        names.push(key);
+    
+    }
+
+   
+    dict4=[];
+    dict5=[];
+    
+    
+    for (var i = 0; i < names.length; i++) {
+        var name_1=names[i]
+        var time_1=[];
+        var frequency_1=[];
+        
+
+        for (const [key, value] of Object.entries(people[name_1])) {
+            time_1.push(key);
+            frequency_1.push(value);
+
+            
+
+          
+        } 
+
+       dict4[name_1]={"Time":time_1, "Frequency":frequency_1};
+
+    } 
+
+    console.log(dict4);
+
+
+    //iterating through the dictionary 
+
+    dict5=[];
+
+    for (const [key] of Object.entries(dict4)) {
+        name=key 
+        var time4= (dict4[name]["Time"]);
+        var frequency2=(dict4[name]["Frequency"]);
+
+
+       
+       freq_all=[]
+       for (var i = 0; i < filtered_dates.length; i++) {
+           date1=filtered_dates[i];
+           for (var j = 0; j < time4.length; j++) { 
+                if (date1===time4[j]){
+                    freq_all.push(frequency2[j]);
+                }
+
+            } 
+        
+           
+           //Do something
+        }
+
+       
+
+       
+
+        dict5[name]=freq_all
+
+      
+    } 
+
+    console.log(dict5);
+
+
+
+
+
+    freq_sum=[]
+    
+
+    for (const [key] of Object.entries(dict5)) {
+        name3=key
+        freq_all_2=dict5[name3]
+        
+        s=0
+        for (var i = 0; i < freq_all_2.length; i++) { 
+            number=(freq_all_2[i]);
+            s=s+number
+        }
+
+        freq_sum.push(s)
+       
+    }
+
+    updateBar1(freq_sum, names);
+  
+
+
+        
+
+
+   
+    
+   
+    
+       
+   
+    
+    
+      
+            
+    
+
+}
+
+
+function editBar2 (people, filtered_dates) {
+    names=[]
+    frequency=[]
+
+    for (const [key, value] of Object.entries(people)) {
+        names.push(key);
+    
+    }
+
+   
+    dict4=[];
+    dict5=[];
+    
+    
+    for (var i = 0; i < names.length; i++) {
+        var name_1=names[i]
+        var time_1=[];
+        var frequency_1=[];
+        
+
+        for (const [key, value] of Object.entries(people[name_1])) {
+            time_1.push(key);
+            frequency_1.push(value);
+
+            
+
+          
+        } 
+
+       dict4[name_1]={"Time":time_1, "Frequency":frequency_1};
+
+    } 
+
+    console.log(dict4);
+
+
+    //iterating through the dictionary 
+
+    dict5=[];
+
+    for (const [key] of Object.entries(dict4)) {
+        name=key 
+        var time4= (dict4[name]["Time"]);
+        var frequency2=(dict4[name]["Frequency"]);
+
+
+       
+       freq_all=[]
+       for (var i = 0; i < filtered_dates.length; i++) {
+           date1=filtered_dates[i];
+           for (var j = 0; j < time4.length; j++) { 
+                if (date1===time4[j]){
+                    freq_all.push(frequency2[j]);
+                }
+
+            } 
+        
+           
+           //Do something
+        }
+
+       
+
+       
+
+        dict5[name]=freq_all
+
+      
+    } 
+
+    console.log(dict5);
+
+
+
+
+
+    freq_sum=[]
+    
+
+    for (const [key] of Object.entries(dict5)) {
+        name3=key
+        freq_all_2=dict5[name3]
+        
+        s=0
+        for (var i = 0; i < freq_all_2.length; i++) { 
+            number=(freq_all_2[i]);
+            s=s+number
+        }
+
+        freq_sum.push(s)
+       
+    }
+
+    updateBar2(freq_sum, names);
+  
+
 }
 
 
