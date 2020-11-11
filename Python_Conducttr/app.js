@@ -146,10 +146,65 @@ function optionChanged() {
 
         for (const [key, value] of Object.entries(to_data)) {
             if (key==dropdown_value){
-                
-                var interaction=value;
 
-                updateBar2(interaction); 
+                var interaction=value;
+                
+                var2=[]
+                txt=[]
+                for (const [key, value] of Object.entries(interaction)) {
+                    var2.push(key);
+                    txt.push(value);
+                    
+                
+                }
+            
+                microblog=[]
+                gosocial=[]
+                websites=[]
+                mail=[]
+                
+                frequency=[]
+                for (var i = 0; i < var2.length; i++) {
+                    microblog.push(interaction[var2[i]].microblog);
+                    gosocial.push(interaction[var2[i]].gosocial);
+                    websites.push(interaction[var2[i]].websites);
+                    mail.push(interaction[var2[i]].mail)
+
+                    
+
+
+
+
+
+                    //text_list.push(interaction[var2[i]]);
+                    
+                    //Do something
+                }
+
+                mail = mail.map(v => v === undefined ? 0 : v);
+                websites= websites.map(v => v === undefined ? 0 : v);
+                gosocial= gosocial.map(v => v === undefined ? 0 : v);
+                microblog= microblog.map(v => v === undefined ? 0 : v);
+
+
+                
+                total_list=[]
+                for (var i = 0; i < var2.length; i++) {
+                    total=0
+                    total=mail[i]+websites[i]+gosocial[i]+microblog[i]
+                    total_list.push(total);
+
+
+
+
+                    //text_list.push(interaction[var2[i]]);
+                    
+                    //Do something
+                }
+
+
+
+                updateBar2(total_list, var2); 
             }  
            
             
