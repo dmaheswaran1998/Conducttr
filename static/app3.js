@@ -97,10 +97,38 @@ function autocomplete(inp, arr) {
   });
 }
 
+var data;
 
-d3.json("player_csv.json").then(function(data) {
 
-    data1=data
+var selector=d3.select("#selDataset");
+
+d3.select("#btn-filter").on("click",updateData);
+
+
+function updateData() {
+
+    d3.json("/filter_form").then(function(All_data) {
+        data=All_data
+        console.log(All_data)
+        init(data)
+       //init(All_data);
+
+
+    });
+
+
+    
+
+
+            
+}
+
+
+var tbody = d3.select("tbody");
+
+function init(data) {
+    
+    var data1=data
 
     console.log(data1);
 
@@ -182,7 +210,6 @@ d3.json("player_csv.json").then(function(data) {
     }
 
 
-    console.log(persona_unique, channel_unique, date_unique);
 
     
     autocomplete(document.getElementById("persona"), persona_unique);
@@ -193,31 +220,82 @@ d3.json("player_csv.json").then(function(data) {
     autocomplete(document.getElementById("from"), from_unique);
     autocomplete(document.getElementById("to"), to_unique);
 
-
-
-});
-
-//from data.js
-
-var tbody = d3.select("tbody");
-
-d3.json("player_csv.json").then(function(data) {
-    var tableData = data;
-    console.log(tableData)
-
-    // log each UFO sighting and append to a rwo
     data.forEach(function(Entry) {
-    console.log(Entry);
-    var row = tbody.append("tr");
-    //logging key-value pairs 
-    Object.entries(Entry).forEach(function([key, value]) {
-        var cell = row.append("td");
-        cell.text(value);
-    });
-    });
-});
+        console.log(Entry);
+        var row = tbody.append("tr");
+        //Multiple loops so that values appear in the correct order
+        //logging key-value pairs 
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Date"){
+                var cell = row.append("td");
+                cell.text(value);
 
-    
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Name"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Channel"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Interaction"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Text"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="From"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="To"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+    });
+
+
+
+}
+
 
 
 
@@ -232,7 +310,7 @@ var button = d3.select("#filter-btn");
 // Create event handlers 
 button.on("click", runEnter);
 
-//Defining the function
+// // //Defining the function
 function runEnter(){
     
     //clear the table body 
@@ -291,77 +369,155 @@ function runEnter(){
     catch(TypeError) {
     var to=""
     }
-    
-    //filtered data filtered by each criteria if they are blank, the filter is basically skipped. 
 
-    d3.json("player_csv.json").then(function(data) {
+    var tableData=data;
+    filteredData=tableData;  
+    
+    if (dateTime!=="") {
+        var filteredData = filteredData.filter(filteredData => filteredData.Date === dateTime);
+    } else { 
+        var filteredData = filteredData
+    }
 
-        var tableData=data
-        filteredData=tableData  
-        
-        if (dateTime!=="") {
-            var filteredData = filteredData.filter(filteredData => filteredData.Date === dateTime);
-        } else { 
-            var filteredData = filteredData
-        }
-    
-        if (persona!=="") {
-            var filteredData = filteredData.filter(filteredData => filteredData.Name === persona);
-        } else { 
-            var filteredData = filteredData
-        }
-    
-        if (channel!=="") {
-            var filteredData = filteredData.filter(filteredData => filteredData.Channel === channel);
-        } else { 
-            var filteredData = filteredData
-        }
-    
-        if (interaction!=="") {
-            var filteredData = filteredData.filter(filteredData => filteredData.Interaction === interaction);
-        } else { 
-            var filteredData = filteredData
-        }
-    
-        if (from!=="") {
-            var filteredData = filteredData.filter(filteredData => filteredData.From === from);
-        } else { 
-            var filteredData = filteredData
-        }
+    if (persona!=="") {
+        var filteredData = filteredData.filter(filteredData => filteredData.Name === persona);
+    } else { 
+        var filteredData = filteredData
+    }
 
-        if (to!=="") {
-            var filteredData = filteredData.filter(filteredData => filteredData.To === to);
-        } else { 
-            var filteredData = filteredData
-        }
+    if (channel!=="") {
+        var filteredData = filteredData.filter(filteredData => filteredData.Channel === channel);
+    } else { 
+        var filteredData = filteredData
+    }
+
+    if (interaction!=="") {
+        var filteredData = filteredData.filter(filteredData => filteredData.Interaction === interaction);
+    } else { 
+        var filteredData = filteredData
+    }
+
+    if (from!=="") {
+        var filteredData = filteredData.filter(filteredData => filteredData.From === from);
+    } else { 
+        var filteredData = filteredData
+    }
+
+    if (to!=="") {
+        var filteredData = filteredData.filter(filteredData => filteredData.To === to);
+    } else { 
+        var filteredData = filteredData
+    }
+
+    console.log(filteredData);
+    //getting the property element 
+    //logging it out.
+
+    filteredData.forEach((Entry) => {
+        var row = tbody.append('tr');
     
-        console.log(filteredData);
-        //getting the property element 
-        //logging it out.
-    
-        filteredData.forEach((Entry) => {
-            var row = tbody.append('tr');
-        
-            Object.entries(Entry).forEach(([key, value]) => {
-                console.log(key, value);
-                var cell = row.append('td');
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Date"){
+                var cell = row.append("td");
                 cell.text(value);
-            });
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Name"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
         });
 
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Channel"){
+                var cell = row.append("td");
+                cell.text(value);
 
+            }
+            
+        });
+
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Interaction"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="Text"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="From"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
+        Object.entries(Entry).forEach(function([key, value]) {
+            
+            if (key==="To"){
+                var cell = row.append("td");
+                cell.text(value);
+
+            }
+            
+        });
     });
-
-
-   
     
+
+
+
+
+
+
+
+
+
+
+
 
 };
 
+var reset_button = d3.select("#reset-btn");
+
+// Create event handlers 
+reset_button.on("click", ResetData);
 
 
-//Reset Table function 
+function ResetData(){
+    //resetting the entire table 
+    var All_data=data;
+    init(All_data);
+
+    //clearing all value entries in the table 
+
+    d3.select("#datetime_start").node().value = "";
+    d3.select("#datetime_end").node().value = "";
+    d3.select("#persona").node().value = "";
+    d3.select("#channel").node().value = "";
+    d3.select("#interaction").node().value = "";
+    d3.select("#from").node().value = "";
+    d3.select("#to").node().value = "";
 
 
-
-//data 
+    
+}

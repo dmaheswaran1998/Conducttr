@@ -1,7 +1,6 @@
 #importing the relevant modules
 
 import csv, json, requests
-import streamlit as st
 import pandas as pd
 import seaborn as sns
 import data_config
