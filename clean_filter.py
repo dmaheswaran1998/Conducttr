@@ -52,9 +52,7 @@ def chainer(s):
 
 
 import csv, json, requests
-import streamlit as st
 import pandas as pd
-import seaborn as sns
 import data_config
 import re
 import numpy as np
